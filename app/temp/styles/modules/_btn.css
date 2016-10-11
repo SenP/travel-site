@@ -1,0 +1,14 @@
+.btn {
+    color: #fff;
+    background-color: #2F5572;
+    text-decoration: none;
+    padding: .75rem 1.2rem;
+    display: inline-block;
+}
+.btn__orange {
+    background-color: #d59541;
+}
+.btn__large {
+    font-size: 1.25rem;
+    padding: 1.1rem 1.9rem;
+}
