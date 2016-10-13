@@ -7,11 +7,16 @@
     }
     &--text-content {
         position: absolute;
+        padding-top: 88px;
         top: 50%;
         left: 0;
         width: 100%;
         text-align: center;
         transform: translateY(-50%);
+
+        @mixin atMedium {
+            padding-top: 60px;
+        }
     }
 
     &--title {
