@@ -2,10 +2,10 @@
     border-bottom: 10px solid $mainBlue;
     position: relative;
 
-    &--image {
+    &__image {
         display: block;
     }
-    &--text-content {
+    &__text-content {
         position: absolute;
         padding-top: 88px;
         top: 50%;
@@ -19,7 +19,7 @@
         }
     }
 
-    &--title {
+    &__title {
         font-weight: 300;
         color: $mainBlue;
         margin: 0;
@@ -30,7 +30,7 @@
         }              
     }
 
-    &--subtitle {
+    &__subtitle {
         font-weight: 300;
         color: $mainBlue;
         margin: 0;
@@ -41,7 +41,7 @@
         }
     }
 
-    &--description {
+    &__description {
         color: #FFF;
         font-size: 1.1rem;
         font-weight: 100;
