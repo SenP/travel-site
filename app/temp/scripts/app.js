@@ -11177,7 +11177,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11199,70 +11199,80 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var StickyHeader = function () {
-	    function StickyHeader() {
-	        _classCallCheck(this, StickyHeader);
+		function StickyHeader() {
+			_classCallCheck(this, StickyHeader);
 
-	        // Header 
-	        this.siteHeader = (0, _jquery2.default)('.site-header');
-	        this.triggerElem = (0, _jquery2.default)('.large-hero__title');
-	        this.createHeaderWaypoint();
-	        // Sections
-	        this.sections = (0, _jquery2.default)('.page-section');
-	        this.headerLinks = (0, _jquery2.default)('.primary-nav a');
-	        this.createSectionWaypoints();
-	        // Add smooth scrolling
-	        this.headerLinks.smoothScroll({ speed: 2000 });
-	    }
+			this.lazyImages = (0, _jquery2.default)('.lazyload');
+			// Header 
+			this.siteHeader = (0, _jquery2.default)('.site-header');
+			this.triggerElem = (0, _jquery2.default)('.large-hero__title');
+			this.createHeaderWaypoint();
+			// Sections
+			this.sections = (0, _jquery2.default)('.page-section');
+			this.headerLinks = (0, _jquery2.default)('.primary-nav a');
+			this.createSectionWaypoints();
+			// Add smooth scrolling
+			this.headerLinks.smoothScroll({ speed: 2000 });
+			// Refresh waypoints
+			this.refreshWaypoints();
+		}
 
-	    _createClass(StickyHeader, [{
-	        key: 'createHeaderWaypoint',
-	        value: function createHeaderWaypoint() {
-	            var root = this;
-	            new Waypoint({
-	                element: root.triggerElem[0],
-	                handler: function handler(direction) {
-	                    if (direction == 'down') {
-	                        root.siteHeader.addClass("site-header--dark");
-	                    } else {
-	                        root.siteHeader.removeClass("site-header--dark");
-	                    }
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'createSectionWaypoints',
-	        value: function createSectionWaypoints() {
-	            var root = this;
-	            this.sections.each(function () {
-	                var currentSection = this;
-	                new Waypoint({
-	                    element: currentSection,
-	                    handler: function handler(direction) {
-	                        if (direction == 'down') {
-	                            var matchingLink = currentSection.getAttribute('data-matching-link');
-	                            root.headerLinks.removeClass('is-current-link');
-	                            (0, _jquery2.default)(matchingLink).addClass('is-current-link');
-	                        }
-	                    },
-	                    offset: "18%"
-	                });
+		_createClass(StickyHeader, [{
+			key: 'refreshWaypoints',
+			value: function refreshWaypoints() {
+				this.lazyImages.on('load', function () {
+					Waypoint.refreshAll();
+				});
+			}
+		}, {
+			key: 'createHeaderWaypoint',
+			value: function createHeaderWaypoint() {
+				var root = this;
+				new Waypoint({
+					element: root.triggerElem[0],
+					handler: function handler(direction) {
+						if (direction == 'down') {
+							root.siteHeader.addClass("site-header--dark");
+						} else {
+							root.siteHeader.removeClass("site-header--dark");
+						}
+					}
+				});
+			}
+		}, {
+			key: 'createSectionWaypoints',
+			value: function createSectionWaypoints() {
+				var root = this;
+				this.sections.each(function () {
+					var currentSection = this;
+					new Waypoint({
+						element: currentSection,
+						handler: function handler(direction) {
+							if (direction == 'down') {
+								var matchingLink = currentSection.getAttribute('data-matching-link');
+								root.headerLinks.removeClass('is-current-link');
+								(0, _jquery2.default)(matchingLink).addClass('is-current-link');
+							}
+						},
+						offset: "18%"
+					});
 
-	                new Waypoint({
-	                    element: currentSection,
-	                    handler: function handler(direction) {
-	                        if (direction == 'up') {
-	                            var matchingLink = currentSection.getAttribute('data-matching-link');
-	                            root.headerLinks.removeClass('is-current-link');
-	                            (0, _jquery2.default)(matchingLink).addClass('is-current-link');
-	                        }
-	                    },
-	                    offset: "-35%"
-	                });
-	            });
-	        }
-	    }]);
+					new Waypoint({
+						element: currentSection,
+						handler: function handler(direction) {
+							if (direction == 'up') {
+								var matchingLink = currentSection.getAttribute('data-matching-link');
+								root.headerLinks.removeClass('is-current-link');
+								(0, _jquery2.default)(matchingLink).addClass('is-current-link');
+							}
+						},
+						offset: "-35%"
+					});
+				});
+			}
+		}]);
 
-	    return StickyHeader;
+		return StickyHeader;
 	}();
 
 	exports.default = StickyHeader;
