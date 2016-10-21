@@ -11,16 +11,16 @@ gulp.task("previewDist", function() {
 	browserSync.init({
 		notify: false,
 		server: {
-			baseDir: 'dist'
+			baseDir: 'docs'
 		}
 	});
 });
 
-gulp.task('deleteDist', function() {
-	return del('./dist');
+gulp.task('deleteDist', ['icons'], function() {
+	return del('./docs');
 });
 
-gulp.task('optimizeImages', ['deleteDist', 'icons'], function() {
+gulp.task('optimizeImages', ['deleteDist'], function() {
 	return gulp.src(['./app/assets/images/**/*', '!./app/assets/images/icons',
 			'!./app/assets/images/icons/**/*'
 		])
@@ -29,16 +29,21 @@ gulp.task('optimizeImages', ['deleteDist', 'icons'], function() {
 			interlaced: true,
 			multipass: true
 		}))
-		.pipe(gulp.dest('./dist/assets/images'));
+		.pipe(gulp.dest('./docs/assets/images'));
 });
 
-gulp.task('useminTask', ['deleteDist', 'styles', 'scripts'], function() {
+gulp.task('useminTaskTrigger', ['deleteDist'], function() {
+	gulp.start('useminTask');
+});
+
+
+gulp.task('useminTask', ['styles', 'scripts'], function() {
 	return gulp.src('./app/index.html')
 		.pipe(usemin({
 			css: [rev, cssnano],
 			js: [rev, uglify]
 		}))
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest('./docs'));
 });
 
-gulp.task('build', ['deleteDist', 'optimizeImages', 'useminTask']);
+gulp.task('build', ['deleteDist', 'optimizeImages', 'useminTaskTrigger']);
